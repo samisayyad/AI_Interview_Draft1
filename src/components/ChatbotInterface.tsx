@@ -194,7 +194,6 @@ const ChatbotInterface: React.FC<ChatbotInterfaceProps> = ({ history, onUpdateHi
                   <div
                     className={`text-xs mt-2 ${
                       message.isBot ? 'text-slate-400' : 'text-purple-100'
-                      message.isBot ? 'text-gray-400' : 'text-blue-100'
                     }`}
                   >
                     {message.timestamp.toLocaleTimeString([], {
