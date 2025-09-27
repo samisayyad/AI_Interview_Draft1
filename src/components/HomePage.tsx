@@ -149,9 +149,9 @@ const HomePage = () => {
             </div>
 
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight animate-fade-in-up" style={{animationDelay: '0.2s'}}>
-              Ready to ace your
+              <span className="font-mono">Ready to ace your</span>
               <br />
-              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent animate-pulse-glow">
+              <span className="font-mono text-blue-400 animate-pulse-glow">
                 next interview?
               </span>
             </h1>
