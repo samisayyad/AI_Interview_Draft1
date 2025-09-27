@@ -37,6 +37,11 @@ const PracticeQuestions = () => {
   const [showResults, setShowResults] = useState<{[key: string]: boolean}>({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [practiceMode, setPracticeMode] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
   const difficulties = ['All', 'Easy', 'Medium', 'Hard'];
   const types = ['All', 'MCQ', 'Coding'];
@@ -504,13 +509,20 @@ class LinearRegression:
     const currentQuestion = filteredQuestions[currentQuestionIndex];
     
     return (
-      <div className="min-h-screen bg-black py-8">
+      <div className="min-h-screen bg-black py-8 relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="fixed inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-float-delayed"></div>
+          <div className="absolute inset-0 bg-grid opacity-10"></div>
+        </div>
+
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Practice Mode Header */}
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-8 animate-fade-in-up">
             <button
               onClick={() => setPracticeMode(false)}
-              className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-200"
+              className="flex items-center space-x-2 text-gray-400 hover:text-white hover:scale-105 transition-all duration-300"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Questions</span>
@@ -525,17 +537,17 @@ class LinearRegression:
           </div>
 
           {/* Progress Bar */}
-          <div className="mb-8">
+          <div className="mb-8 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
             <div className="w-full bg-gray-700 rounded-full h-2">
               <div 
-                className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500 animate-pulse-glow"
                 style={{ width: `${((currentQuestionIndex + 1) / filteredQuestions.length) * 100}%` }}
               ></div>
             </div>
           </div>
 
           {/* Question Card */}
-          <div className="bg-gray-800/50 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-gray-700/50 mb-8">
+          <div className="glass-dark rounded-2xl p-8 shadow-2xl border border-gray-700/50 mb-8 aura-gradient animate-fade-in-up" style={{animationDelay: '0.4s'}}>
             <div className="flex items-center space-x-3 mb-6">
               <span className={`px-3 py-1 rounded-full text-sm font-medium ${getTypeColor(currentQuestion.type)}`}>
                 {currentQuestion.type.toUpperCase()}
@@ -560,13 +572,13 @@ class LinearRegression:
                     key={option.id}
                     className={`flex items-center space-x-3 p-4 rounded-xl border cursor-pointer transition-all duration-200 ${
                       userAnswers[currentQuestion.id] === option.text
-                        ? 'border-blue-500 bg-blue-500/10'
-                        : 'border-gray-600/50 hover:border-gray-500/50 hover:bg-gray-700/30'
+                        ? 'border-blue-500 bg-blue-500/10 scale-105'
+                        : 'border-gray-600/50 hover:border-gray-500/50 hover:bg-gray-700/30 hover:scale-102'
                     } ${
                       showResults[currentQuestion.id] && option.isCorrect
-                        ? 'border-green-500 bg-green-500/10'
+                        ? 'border-green-500 bg-green-500/10 aura-blue'
                         : showResults[currentQuestion.id] && userAnswers[currentQuestion.id] === option.text && !option.isCorrect
-                        ? 'border-red-500 bg-red-500/10'
+                        ? 'border-red-500 bg-red-500/10 aura-purple'
                         : ''
                     }`}
                   >
@@ -589,7 +601,7 @@ class LinearRegression:
                 {userAnswers[currentQuestion.id] && !showResults[currentQuestion.id] && (
                   <button
                     onClick={() => showMCQResult(currentQuestion.id)}
-                    className="mt-6 bg-blue-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 transition-colors duration-200"
+                    className="mt-6 bg-blue-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 hover:scale-105 transition-all duration-300 aura-blue"
                   >
                     Check Answer
                   </button>
@@ -597,13 +609,13 @@ class LinearRegression:
                 
                 {showResults[currentQuestion.id] && (
                   <div className="mt-6 p-6 bg-gray-700/50 rounded-xl">
-                    <h4 className="font-semibold text-white mb-3">Explanation:</h4>
+                    <h4 className="font-semibold text-white mb-3 animate-fade-in-up">Explanation:</h4>
                     <p className="text-gray-300 mb-4">{currentQuestion.explanation}</p>
                     <div>
-                      <h5 className="font-semibold text-white mb-2">Key Points:</h5>
+                      <h5 className="font-semibold text-white mb-2 animate-fade-in-up">Key Points:</h5>
                       <ul className="space-y-1">
                         {currentQuestion.tips.map((tip, index) => (
-                          <li key={index} className="text-sm text-gray-300 flex items-start space-x-2">
+                          <li key={index} className={`text-sm text-gray-300 flex items-start space-x-2 animate-fade-in-left`} style={{animationDelay: `${index * 0.1}s`}}>
                             <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                             <span>{tip}</span>
                           </li>
@@ -615,7 +627,7 @@ class LinearRegression:
               </div>
             ) : (
               <div className="space-y-6">
-                <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-600/50 overflow-x-auto">
+                <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-600/50 overflow-x-auto hover:border-purple-500/50 transition-colors duration-300">
                   <div className="flex items-center space-x-2 mb-4">
                     <Code className="w-5 h-5 text-purple-400" />
                     <span className="font-medium text-gray-300">Code Template:</span>
@@ -627,10 +639,10 @@ class LinearRegression:
                 
                 {currentQuestion.testCases && (
                   <div>
-                    <h4 className="font-semibold text-white mb-3">Test Cases:</h4>
+                    <h4 className="font-semibold text-white mb-3 animate-fade-in-up">Test Cases:</h4>
                     <div className="space-y-3">
                       {currentQuestion.testCases.map((testCase, index) => (
-                        <div key={index} className="bg-gray-700/50 p-4 rounded-xl">
+                        <div key={index} className={`bg-gray-700/50 p-4 rounded-xl hover:bg-gray-600/50 transition-colors duration-300 animate-fade-in-up`} style={{animationDelay: `${index * 0.1}s`}}>
                           <div className="text-gray-300 mb-1">
                             <span className="text-blue-400 font-medium">Input:</span> {testCase.input}
                           </div>
@@ -644,10 +656,10 @@ class LinearRegression:
                 )}
 
                 <div>
-                  <h4 className="font-semibold text-white mb-3">Tips:</h4>
+                  <h4 className="font-semibold text-white mb-3 animate-fade-in-up">Tips:</h4>
                   <ul className="space-y-2">
                     {currentQuestion.tips.map((tip, index) => (
-                      <li key={index} className="text-sm text-gray-300 flex items-start space-x-2">
+                      <li key={index} className={`text-sm text-gray-300 flex items-start space-x-2 animate-fade-in-left`} style={{animationDelay: `${index * 0.1}s`}}>
                         <div className="w-1.5 h-1.5 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
                         <span>{tip}</span>
                       </li>
@@ -659,11 +671,11 @@ class LinearRegression:
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between animate-fade-in-up" style={{animationDelay: '0.6s'}}>
             <button
               onClick={prevQuestion}
               disabled={currentQuestionIndex === 0}
-              className="flex items-center space-x-2 px-6 py-3 bg-gray-700/50 text-gray-300 rounded-xl font-medium hover:bg-gray-600/50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center space-x-2 px-6 py-3 glass-dark text-gray-300 rounded-xl font-medium hover:bg-gray-600/50 hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Previous</span>
@@ -671,10 +683,10 @@ class LinearRegression:
 
             <button
               onClick={nextQuestion}
-              className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
+              className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 aura-gradient"
             >
               <span>{currentQuestionIndex === filteredQuestions.length - 1 ? 'Finish' : 'Next'}</span>
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
             </button>
           </div>
         </div>
@@ -683,23 +695,31 @@ class LinearRegression:
   }
 
   return (
-    <div className="min-h-screen bg-black py-8">
+    <div className="min-h-screen bg-black py-8 relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-float-delayed"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl animate-rotate-slow"></div>
+        <div className="absolute inset-0 bg-grid opacity-10"></div>
+      </div>
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-8 animate-fade-in-up">
+        <div className={`text-center mb-8 transition-all duration-1000 ${isVisible ? 'animate-fade-in-up' : 'opacity-0 translate-y-10'}`}>
           <div className="flex items-center justify-center space-x-4 mb-6">
             {selectedDomain !== 'All' && (
               <Link
                 to="/practice"
-                className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-200"
+                className="flex items-center space-x-2 text-gray-400 hover:text-white hover:scale-105 transition-all duration-300"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>All Domains</span>
               </Link>
             )}
-            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <BookOpen className="w-6 h-6 text-white" />
+            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl animate-pulse-glow hover:scale-110 transition-transform duration-500">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center animate-bounce-slow">
+                <BookOpen className="w-6 h-6 text-white animate-float" />
               </div>
             </div>
           </div>
@@ -715,25 +735,25 @@ class LinearRegression:
         </div>
 
         {/* Statistics */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8 animate-fade-in-up animation-delay-200">
-          <div className="bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-2xl border border-gray-700/50 text-center hover:border-blue-500/50 transition-all duration-300">
-            <div className="text-2xl font-bold text-blue-400 mb-1">{filteredQuestions.length}</div>
+        <div className={`grid md:grid-cols-4 gap-6 mb-8 transition-all duration-1000 ${isVisible ? 'animate-fade-in-up' : 'opacity-0 translate-y-10'}`} style={{animationDelay: '0.2s'}}>
+          <div className="glass-dark rounded-xl p-6 shadow-2xl border border-gray-700/50 text-center hover:border-blue-500/50 hover:scale-105 transition-all duration-500 aura-blue">
+            <div className="text-2xl font-bold text-blue-400 mb-1 animate-bounce-slow">{filteredQuestions.length}</div>
             <div className="text-sm text-gray-300">Total Questions</div>
           </div>
-          <div className="bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-2xl border border-gray-700/50 text-center hover:border-blue-500/50 transition-all duration-300">
-            <div className="text-2xl font-bold text-blue-400 mb-1">
+          <div className="glass-dark rounded-xl p-6 shadow-2xl border border-gray-700/50 text-center hover:border-blue-500/50 hover:scale-105 transition-all duration-500 aura-blue">
+            <div className="text-2xl font-bold text-blue-400 mb-1 animate-bounce-slow">
               {filteredQuestions.filter(q => q.type === 'mcq').length}
             </div>
             <div className="text-sm text-gray-300">MCQ Questions</div>
           </div>
-          <div className="bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-2xl border border-gray-700/50 text-center hover:border-purple-500/50 transition-all duration-300">
-            <div className="text-2xl font-bold text-purple-400 mb-1">
+          <div className="glass-dark rounded-xl p-6 shadow-2xl border border-gray-700/50 text-center hover:border-purple-500/50 hover:scale-105 transition-all duration-500 aura-purple">
+            <div className="text-2xl font-bold text-purple-400 mb-1 animate-bounce-slow">
               {filteredQuestions.filter(q => q.type === 'coding').length}
             </div>
             <div className="text-sm text-gray-300">Coding Questions</div>
           </div>
-          <div className="bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-2xl border border-gray-700/50 text-center hover:border-green-500/50 transition-all duration-300">
-            <div className="text-2xl font-bold text-green-400 mb-1">
+          <div className="glass-dark rounded-xl p-6 shadow-2xl border border-gray-700/50 text-center hover:border-green-500/50 hover:scale-105 transition-all duration-500 aura-blue">
+            <div className="text-2xl font-bold text-green-400 mb-1 animate-bounce-slow">
               {Math.round(filteredQuestions.reduce((acc, q) => acc + q.estimatedTime, 0) / filteredQuestions.length) || 0}
             </div>
             <div className="text-sm text-gray-300">Avg. Time (min)</div>
@@ -741,10 +761,10 @@ class LinearRegression:
         </div>
 
         {/* Filters */}
-        <div className="bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-2xl border border-gray-700/50 mb-8 animate-fade-in-up animation-delay-400">
+        <div className={`glass-dark rounded-xl p-6 shadow-2xl border border-gray-700/50 mb-8 aura-gradient transition-all duration-1000 ${isVisible ? 'animate-fade-in-up' : 'opacity-0 translate-y-10'}`} style={{animationDelay: '0.4s'}}>
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center space-x-2">
-              <Filter className="w-4 h-4 text-blue-400" />
+              <Filter className="w-4 h-4 text-blue-400 animate-bounce-slow" />
               <span className="text-sm font-medium text-gray-300">Filters:</span>
             </div>
             
@@ -753,7 +773,7 @@ class LinearRegression:
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
-                className="px-3 py-1 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-3 py-1 glass-dark border border-gray-600/50 rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500 hover:border-blue-500/50 transition-colors duration-300"
               >
                 {types.map(type => (
                   <option key={type} value={type}>{type}</option>
@@ -766,7 +786,7 @@ class LinearRegression:
               <select
                 value={selectedDifficulty}
                 onChange={(e) => setSelectedDifficulty(e.target.value)}
-                className="px-3 py-1 bg-gray-700/50 backdrop-blur-sm border border-gray-600/50 rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-3 py-1 glass-dark border border-gray-600/50 rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500 hover:border-blue-500/50 transition-colors duration-300"
               >
                 {difficulties.map(difficulty => (
                   <option key={difficulty} value={difficulty}>{difficulty}</option>
@@ -777,9 +797,9 @@ class LinearRegression:
             {filteredQuestions.length > 0 && (
               <button
                 onClick={startPracticeMode}
-                className="ml-auto flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
+                className="ml-auto flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:shadow-lg transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 aura-gradient"
               >
-                <Play className="w-4 h-4" />
+                <Play className="w-4 h-4 animate-bounce-slow" />
                 <span>Start Practice</span>
               </button>
             )}
@@ -792,11 +812,11 @@ class LinearRegression:
         </div>
 
         {/* Questions List */}
-        <div className="space-y-4 animate-fade-in-up animation-delay-600">
+        <div className={`space-y-4 transition-all duration-1000 ${isVisible ? 'animate-fade-in-up' : 'opacity-0 translate-y-10'}`} style={{animationDelay: '0.6s'}}>
           {filteredQuestions.map((question) => (
-            <div key={question.id} className="bg-gray-800/50 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700/50 overflow-hidden hover:border-blue-500/50 transition-all duration-300">
+            <div key={question.id} className="glass-dark rounded-xl shadow-2xl border border-gray-700/50 overflow-hidden hover:border-blue-500/50 hover:scale-102 transition-all duration-500 aura-blue">
               <div
-                className="p-6 cursor-pointer hover:bg-gray-700/30 transition-all duration-300"
+                className="p-6 cursor-pointer hover:bg-gray-700/30 transition-all duration-500"
                 onClick={() => setExpandedQuestion(
                   expandedQuestion === question.id ? null : question.id
                 )}
@@ -823,7 +843,7 @@ class LinearRegression:
                   <ChevronRight
                     className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${
                       expandedQuestion === question.id ? 'rotate-90' : ''
-                    }`}
+                    } hover:scale-110`}
                   />
                 </div>
               </div>
@@ -838,15 +858,15 @@ class LinearRegression:
                           {question.options?.map((option) => (
                             <label
                               key={option.id}
-                              className={`flex items-center space-x-3 p-3 rounded-lg border cursor-pointer transition-all duration-200 ${
+                              className={`flex items-center space-x-3 p-3 rounded-lg border cursor-pointer transition-all duration-300 ${
                                 userAnswers[question.id] === option.text
-                                  ? 'border-blue-500 bg-blue-500/10'
-                                  : 'border-gray-600/50 hover:border-gray-500/50 hover:bg-gray-700/30'
+                                  ? 'border-blue-500 bg-blue-500/10 scale-105'
+                                  : 'border-gray-600/50 hover:border-gray-500/50 hover:bg-gray-700/30 hover:scale-102'
                               } ${
                                 showResults[question.id] && option.isCorrect
-                                  ? 'border-green-500 bg-green-500/10'
+                                  ? 'border-green-500 bg-green-500/10 aura-blue'
                                   : showResults[question.id] && userAnswers[question.id] === option.text && !option.isCorrect
-                                  ? 'border-red-500 bg-red-500/10'
+                                  ? 'border-red-500 bg-red-500/10 aura-purple'
                                   : ''
                               }`}
                             >
@@ -870,7 +890,7 @@ class LinearRegression:
                         {userAnswers[question.id] && !showResults[question.id] && (
                           <button
                             onClick={() => showMCQResult(question.id)}
-                            className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200"
+                            className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 hover:scale-105 transition-all duration-300 aura-blue"
                           >
                             Check Answer
                           </button>
@@ -878,7 +898,7 @@ class LinearRegression:
                         
                         {showResults[question.id] && (
                           <div className="mt-4 p-4 bg-gray-700/50 rounded-lg">
-                            <h5 className="font-semibold text-white mb-2">Explanation:</h5>
+                            <h5 className="font-semibold text-white mb-2 animate-fade-in-up">Explanation:</h5>
                             <p className="text-gray-300 text-sm">{question.explanation}</p>
                           </div>
                         )}
@@ -887,11 +907,11 @@ class LinearRegression:
                   ) : (
                     <div className="space-y-6">
                       <div>
-                        <h4 className="font-semibold text-white mb-4 flex items-center">
+                        <h4 className="font-semibold text-white mb-4 flex items-center animate-fade-in-up">
                           <Code className="w-4 h-4 mr-2 text-purple-400" />
                           Code Template
                         </h4>
-                        <div className="bg-gray-900/50 p-4 rounded-lg border border-gray-600/50 overflow-x-auto">
+                        <div className="bg-gray-900/50 p-4 rounded-lg border border-gray-600/50 overflow-x-auto hover:border-purple-500/50 transition-colors duration-300">
                           <pre className="text-sm text-gray-300">
                             <code>{question.codeTemplate}</code>
                           </pre>
@@ -900,10 +920,10 @@ class LinearRegression:
                       
                       {question.testCases && (
                         <div>
-                          <h4 className="font-semibold text-white mb-3">Test Cases:</h4>
+                          <h4 className="font-semibold text-white mb-3 animate-fade-in-up">Test Cases:</h4>
                           <div className="space-y-2">
                             {question.testCases.map((testCase, index) => (
-                              <div key={index} className="bg-gray-700/50 p-3 rounded-lg text-sm">
+                              <div key={index} className={`bg-gray-700/50 p-3 rounded-lg text-sm hover:bg-gray-600/50 transition-colors duration-300 animate-fade-in-up`} style={{animationDelay: `${index * 0.1}s`}}>
                                 <div className="text-gray-300">
                                   <span className="text-blue-400">Input:</span> {testCase.input}
                                 </div>
@@ -919,13 +939,13 @@ class LinearRegression:
                   )}
                   
                   <div className="mt-6">
-                    <h4 className="font-semibold text-white mb-3 flex items-center">
-                      <Star className="w-4 h-4 mr-2 text-yellow-400" />
+                    <h4 className="font-semibold text-white mb-3 flex items-center animate-fade-in-up">
+                      <Star className="w-4 h-4 mr-2 text-yellow-400 animate-bounce-slow" />
                       Key Points to Remember
                     </h4>
                     <ul className="space-y-2">
                       {question.tips.map((tip, index) => (
-                        <li key={index} className="text-sm text-gray-300 flex items-start space-x-2">
+                        <li key={index} className={`text-sm text-gray-300 flex items-start space-x-2 animate-fade-in-left`} style={{animationDelay: `${index * 0.1}s`}}>
                           <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                           <span>{tip}</span>
                         </li>
@@ -940,7 +960,7 @@ class LinearRegression:
 
         {filteredQuestions.length === 0 && (
           <div className="text-center py-12">
-            <Target className="w-16 h-16 text-blue-400 mx-auto mb-4" />
+            <Target className="w-16 h-16 text-blue-400 mx-auto mb-4 animate-bounce-slow" />
             <h3 className="text-lg font-semibold text-white mb-2">No questions found</h3>
             <p className="text-gray-300">Try adjusting your filters to see more questions.</p>
           </div>
@@ -948,7 +968,7 @@ class LinearRegression:
 
         {/* Action Section */}
         {filteredQuestions.length > 0 && (
-          <div className="mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-center shadow-2xl animate-fade-in-up animation-delay-800">
+          <div className={`mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-center shadow-2xl aura-gradient transition-all duration-1000 ${isVisible ? 'animate-fade-in-up' : 'opacity-0 translate-y-10'}`} style={{animationDelay: '0.8s'}}>
             <h2 className="text-2xl font-bold text-white mb-4">Ready to Test Your Skills?</h2>
             <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
               Start a comprehensive practice session with questions from {selectedDomain === 'All' ? 'all domains' : selectedDomain}.
@@ -956,16 +976,16 @@ class LinearRegression:
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={startPracticeMode}
-                className="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/30 hover:shadow-2xl transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 border border-white/20 flex items-center justify-center space-x-2"
+                className="glass-effect text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/30 hover:shadow-2xl transform hover:-translate-y-2 hover:scale-105 transition-all duration-500 border border-white/20 flex items-center justify-center space-x-2"
               >
-                <Play className="w-5 h-5" />
+                <Play className="w-5 h-5 animate-bounce-slow" />
                 <span>Start Practice Session</span>
               </button>
               <Link
                 to="/interview"
-                className="bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold border border-white/30 hover:bg-white/20 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center space-x-2"
+                className="glass-effect text-white px-8 py-4 rounded-xl font-semibold border border-white/30 hover:bg-white/20 hover:shadow-lg transform hover:-translate-y-1 hover:scale-105 transition-all duration-500 flex items-center justify-center space-x-2"
               >
-                <Video className="w-5 h-5" />
+                <Video className="w-5 h-5 animate-bounce-slow" />
                 <span>Mock Interview</span>
               </Link>
             </div>
