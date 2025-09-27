@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Camera, Mic, MicOff, Video, VideoOff, Play, Square, RotateCcw, CheckCircle, Code } from 'lucide-react';
+import { Camera, Mic, MicOff, Video, VideoOff, Play, Square, RotateCcw, CheckCircle, Code, AlertCircle } from 'lucide-react';
 
 interface InterviewSessionProps {
   onComplete: (data: any) => void;
@@ -16,6 +16,7 @@ const InterviewSession: React.FC<InterviewSessionProps> = ({ onComplete }) => {
   const [preparationMode, setPreparationMode] = useState(true);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [userAnswers, setUserAnswers] = useState<{[key: number]: number | string}>({});
+  const [cameraError, setCameraError] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const intervalRef = useRef<NodeJS.Timeout>();
 
@@ -125,16 +126,21 @@ function reverseList(head) {
   ];
 
   useEffect(() => {
-    if (cameraEnabled) {
-      startCamera();
-    }
+    startMediaStream();
     return () => {
-      stopCamera();
+      stopMediaStream();
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [cameraEnabled]);
+  }, [cameraEnabled, micEnabled]);
 
-  const startCamera = async () => {
+  const startMediaStream = async () => {
+    setCameraError(null);
+    
+    if (!cameraEnabled && !micEnabled) {
+      stopMediaStream();
+      return;
+    }
+
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ 
         video: cameraEnabled, 
@@ -144,11 +150,31 @@ function reverseList(head) {
         videoRef.current.srcObject = stream;
       }
     } catch (error) {
-      console.error('Error accessing camera:', error);
+      console.error('Error accessing media devices:', error);
+      
+      let errorMessage = 'Unable to access camera/microphone';
+      
+      if (error instanceof DOMException) {
+        switch (error.name) {
+          case 'NotReadableError':
+            errorMessage = 'Camera is already in use by another application. Please close other apps using the camera and try again.';
+            break;
+          case 'NotFoundError':
+            errorMessage = 'No camera or microphone found. Please connect a camera and microphone.';
+            break;
+          case 'NotAllowedError':
+            errorMessage = 'Camera and microphone access denied. Please allow access in your browser settings.';
+            break;
+        }
+      }
+      
+      setCameraError(errorMessage);
+      setCameraEnabled(false);
+      setMicEnabled(false);
     }
   };
 
-  const stopCamera = () => {
+  const stopMediaStream = () => {
     if (videoRef.current && videoRef.current.srcObject) {
       const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
       tracks.forEach(track => track.stop());
@@ -303,6 +329,17 @@ function reverseList(head) {
               
               {preparationMode ? (
                 <div className="space-y-4">
+                  {cameraError && (
+                    <div className="bg-red-900/50 border border-red-500/50 rounded-lg p-4 mb-4">
+                      <div className="flex items-start space-x-3">
+                        <AlertCircle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <h4 className="text-red-300 font-medium mb-1">Media Access Error</h4>
+                          <p className="text-red-200 text-sm">{cameraError}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   <div className="flex items-center space-x-2 text-green-400">
                     <Camera className="w-5 h-5" />
                     <span>Camera: {cameraEnabled ? 'Ready' : 'Disabled'}</span>
@@ -409,7 +446,8 @@ function reverseList(head) {
               {preparationMode ? (
                 <button
                   onClick={startRecording}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-xl font-semibold hover:shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2"
+                  disabled={!!cameraError}
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-xl font-semibold hover:shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   <Play className="w-5 h-5" />
                   <span>Start Interview</span>
