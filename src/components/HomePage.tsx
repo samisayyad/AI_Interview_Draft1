@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Video, MessageCircle, BarChart3, BookOpen, ArrowRight, CheckCircle, Zap, Eye, Clock, TrendingUp, Users, Award, Star, Play, ChevronDown, Code, Database, Globe, Cpu, Shield, Brain } from 'lucide-react';
 
