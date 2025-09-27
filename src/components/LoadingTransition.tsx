@@ -25,7 +25,7 @@ const LoadingTransition: React.FC<LoadingTransitionProps> = ({ isLoading }) => {
 
         {/* Loading Text */}
         <h2 className="text-2xl font-bold text-white mb-4 animate-fade-in">
-          Devgent AI
+          DevGent AI
         </h2>
         
         {/* Loading Bar */}

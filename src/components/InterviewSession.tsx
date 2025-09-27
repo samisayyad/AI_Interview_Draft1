@@ -20,27 +20,31 @@ const InterviewSession: React.FC<InterviewSessionProps> = ({ onComplete }) => {
   const intervalRef = useRef<NodeJS.Timeout>();
 
   const questions = [
-    // MCQ Questions (7)
+    // MCQ Questions (7) - Mixed domains
     {
       type: 'mcq',
+      domain: 'Data Structures & Algorithms',
       question: "What is the time complexity of accessing an element in an array by index?",
       options: ['O(1)', 'O(n)', 'O(log n)', 'O(n²)'],
       correctAnswer: 0
     },
     {
       type: 'mcq',
+      domain: 'Algorithms',
       question: "Which sorting algorithm has the best average-case time complexity?",
       options: ['Bubble Sort', 'Quick Sort', 'Selection Sort', 'Insertion Sort'],
       correctAnswer: 1
     },
     {
       type: 'mcq',
+      domain: 'Object-Oriented Programming',
       question: "Which OOP principle allows a class to inherit properties from another class?",
       options: ['Encapsulation', 'Inheritance', 'Polymorphism', 'Abstraction'],
       correctAnswer: 1
     },
     {
       type: 'mcq',
+      domain: 'Database Management',
       question: "What does ACID stand for in database transactions?",
       options: [
         'Atomicity, Consistency, Isolation, Durability',
@@ -52,12 +56,14 @@ const InterviewSession: React.FC<InterviewSessionProps> = ({ onComplete }) => {
     },
     {
       type: 'mcq',
+      domain: 'Web Development',
       question: "Which HTTP method is used to retrieve data from a server?",
       options: ['POST', 'PUT', 'GET', 'DELETE'],
       correctAnswer: 2
     },
     {
       type: 'mcq',
+      domain: 'System Design',
       question: "What is the primary purpose of a load balancer in system architecture?",
       options: [
         'Data encryption',
@@ -69,13 +75,15 @@ const InterviewSession: React.FC<InterviewSessionProps> = ({ onComplete }) => {
     },
     {
       type: 'mcq',
+      domain: 'Algorithms',
       question: "What is the space complexity of the recursive Fibonacci algorithm?",
       options: ['O(1)', 'O(n)', 'O(log n)', 'O(n²)'],
       correctAnswer: 1
     },
-    // Coding Questions (3)
+    // Coding Questions (3) - Advanced topics
     {
       type: 'coding',
+      domain: 'Data Structures & Algorithms',
       question: "Implement a function to reverse a linked list iteratively. Write your approach and the main logic.",
       codeTemplate: `class ListNode {
     constructor(val, next = null) {
@@ -90,6 +98,7 @@ function reverseList(head) {
     },
     {
       type: 'coding',
+      domain: 'Dynamic Programming',
       question: "Implement a function to find the longest common subsequence of two strings using dynamic programming. Explain your approach.",
       codeTemplate: `function longestCommonSubsequence(text1, text2) {
     // Your approach here
@@ -97,6 +106,7 @@ function reverseList(head) {
     },
     {
       type: 'coding',
+      domain: 'System Design',
       question: "Implement a basic LRU (Least Recently Used) cache with get and put operations. Explain the data structures you would use.",
       codeTemplate: `class LRUCache {
     constructor(capacity) {

@@ -23,7 +23,7 @@ const Navigation = () => {
                 <div className="w-3 h-3 bg-white rounded-sm"></div>
               </div>
             </div>
-            <span className="font-bold text-xl text-white">Devgent AI</span>
+            <span className="font-bold text-xl text-white">DevGent AI</span>
           </div>
           
           <div className="flex space-x-1">
