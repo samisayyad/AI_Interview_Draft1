@@ -56,17 +56,17 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
+      <div className="min-h-screen bg-black py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-white rounded-xl p-12 shadow-lg">
-            <BarChart3 className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-slate-800 mb-4">No Interview Data</h2>
-            <p className="text-slate-600 mb-6">
+          <div className="bg-gray-800/50 backdrop-blur-md rounded-xl p-12 shadow-lg border border-gray-700/50">
+            <BarChart3 className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-white mb-4">No Interview Data</h2>
+            <p className="text-gray-300 mb-6">
               Complete an interview session to see your detailed feedback and analysis.
             </p>
             <Link
               to="/interview"
-              className="bg-gradient-to-r from-blue-600 to-teal-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
             >
               Start Interview
             </Link>
@@ -127,20 +127,20 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
+    <div className="min-h-screen bg-black py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-slate-800 mb-4">Interview Analysis</h1>
-          <p className="text-lg text-slate-600">
+          <h1 className="text-4xl font-bold text-white mb-4">Interview Analysis</h1>
+          <p className="text-lg text-gray-300">
             Detailed feedback on your interview performance
           </p>
           <div className="flex justify-center space-x-4 mt-6">
-            <button className="flex items-center space-x-2 bg-white text-slate-700 px-4 py-2 rounded-lg border border-slate-200 hover:border-slate-300 transition-all">
+            <button className="flex items-center space-x-2 bg-gray-800/50 text-gray-300 px-4 py-2 rounded-lg border border-gray-600/50 hover:border-gray-500/50 transition-all">
               <Download className="w-4 h-4" />
               <span>Download Report</span>
             </button>
-            <button className="flex items-center space-x-2 bg-white text-slate-700 px-4 py-2 rounded-lg border border-slate-200 hover:border-slate-300 transition-all">
+            <button className="flex items-center space-x-2 bg-gray-800/50 text-gray-300 px-4 py-2 rounded-lg border border-gray-600/50 hover:border-gray-500/50 transition-all">
               <Share2 className="w-4 h-4" />
               <span>Share Results</span>
             </button>
@@ -148,7 +148,7 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
         </div>
 
         {/* Overall Score */}
-        <div className="bg-white rounded-2xl p-8 shadow-lg mb-8">
+        <div className="bg-gray-800/50 backdrop-blur-md rounded-2xl p-8 shadow-lg mb-8 border border-gray-700/50">
           <div className="text-center">
             <div className="relative w-32 h-32 mx-auto mb-6">
               <svg className="w-32 h-32 transform -rotate-90" viewBox="0 0 120 120">
@@ -157,7 +157,7 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
                   cy="60"
                   r="50"
                   fill="none"
-                  stroke="#e2e8f0"
+                  stroke="#374151"
                   strokeWidth="8"
                 />
                 <circle
@@ -180,16 +180,16 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-slate-800">{overallScore}</div>
-                  <div className="text-sm text-slate-600">Overall</div>
+                  <div className="text-3xl font-bold text-white">{overallScore}</div>
+                  <div className="text-sm text-gray-300">Overall</div>
                 </div>
               </div>
             </div>
-            <h2 className="text-2xl font-bold text-slate-800 mb-2">
+            <h2 className="text-2xl font-bold text-white mb-2">
               {overallScore >= 80 ? 'Excellent Performance!' : 
                overallScore >= 60 ? 'Good Performance!' : 'Room for Improvement'}
             </h2>
-            <p className="text-slate-600">
+            <p className="text-gray-300">
               Interview Duration: {formatDuration(data.duration)} • {data.questions.length} Questions
             </p>
           </div>
@@ -197,9 +197,9 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
 
         {/* Score Breakdown */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-xl p-6 shadow-lg">
+          <div className="bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-lg border border-gray-700/50">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-slate-800">Speech Analysis</h3>
+              <h3 className="text-lg font-semibold text-white">Speech Analysis</h3>
               <div className={`text-2xl font-bold ${getScoreColor(animatedScores.speech)}`}>
                 {animatedScores.speech}%
               </div>
@@ -223,6 +223,7 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
               </div>
             </div>
             <div className="w-full bg-slate-200 rounded-full h-2 mt-4">
+            <div className="w-full bg-gray-700 rounded-full h-2 mt-4">
               <div 
                 className={`bg-gradient-to-r ${getScoreGradient(animatedScores.speech)} h-2 rounded-full transition-all duration-1000 ease-out`}
                 style={{ width: `${animatedScores.speech}%` }}
@@ -230,9 +231,9 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-lg">
+          <div className="bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-lg border border-gray-700/50">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-slate-800">Body Language</h3>
+              <h3 className="text-lg font-semibold text-white">Body Language</h3>
               <div className={`text-2xl font-bold ${getScoreColor(animatedScores.body)}`}>
                 {animatedScores.body}%
               </div>
@@ -255,7 +256,7 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
                 <span>{data.bodyLanguage.facial_expression}%</span>
               </div>
             </div>
-            <div className="w-full bg-slate-200 rounded-full h-2 mt-4">
+            <div className="w-full bg-gray-700 rounded-full h-2 mt-4">
               <div 
                 className={`bg-gradient-to-r ${getScoreGradient(animatedScores.body)} h-2 rounded-full transition-all duration-1000 ease-out`}
                 style={{ width: `${animatedScores.body}%` }}
@@ -263,9 +264,9 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-lg">
+          <div className="bg-gray-800/50 backdrop-blur-md rounded-xl p-6 shadow-lg border border-gray-700/50">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-slate-800">Content Quality</h3>
+              <h3 className="text-lg font-semibold text-white">Content Quality</h3>
               <div className={`text-2xl font-bold ${getScoreColor(animatedScores.content)}`}>
                 {animatedScores.content}%
               </div>
@@ -288,7 +289,7 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
                 <span>{data.contentAnalysis.examples}%</span>
               </div>
             </div>
-            <div className="w-full bg-slate-200 rounded-full h-2 mt-4">
+            <div className="w-full bg-gray-700 rounded-full h-2 mt-4">
               <div 
                 className={`bg-gradient-to-r ${getScoreGradient(animatedScores.content)} h-2 rounded-full transition-all duration-1000 ease-out`}
                 style={{ width: `${animatedScores.content}%` }}
@@ -298,9 +299,9 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
         </div>
 
         {/* Recommendations */}
-        <div className="bg-slate-800/50 backdrop-blur-md rounded-xl p-8 shadow-2xl border border-slate-700/50 mb-8 animate-fade-in-up animation-delay-600">
+        <div className="bg-gray-800/50 backdrop-blur-md rounded-xl p-8 shadow-2xl border border-gray-700/50 mb-8 animate-fade-in-up animation-delay-600">
           <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-            <TrendingUp className="w-6 h-6 mr-2 text-purple-400" />
+            <TrendingUp className="w-6 h-6 mr-2 text-blue-400" />
             Personalized Recommendations
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
@@ -315,7 +316,8 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
                 <ul className="space-y-2">
                   {rec.tips.map((tip, tipIndex) => (
                     <li key={tipIndex} className="text-sm text-slate-300 flex items-start space-x-2">
-                      <div className="w-1.5 h-1.5 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <li key={tipIndex} className="text-sm text-gray-300 flex items-start space-x-2">
+                      <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                       <span>{tip}</span>
                     </li>
                   ))}
@@ -329,7 +331,7 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-800">
           <Link
             to="/interview"
-            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:shadow-purple-500/25 transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2"
           >
             <RefreshCw className="w-5 h-5" />
             <span>Practice Again</span>
@@ -337,7 +339,7 @@ const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ data }) => {
           
           <Link
             to="/chatbot"
-            className="bg-slate-800/50 backdrop-blur-md text-slate-300 px-8 py-4 rounded-xl font-semibold border-2 border-slate-600/50 hover:border-purple-500/50 hover:bg-slate-700/50 hover:shadow-lg transform hover:-translate-y-2 transition-all duration-300 flex items-center justify-center space-x-2"
+            className="bg-gray-800/50 backdrop-blur-md text-gray-300 px-8 py-4 rounded-xl font-semibold border-2 border-gray-600/50 hover:border-blue-500/50 hover:bg-gray-700/50 hover:shadow-lg transform hover:-translate-y-2 transition-all duration-300 flex items-center justify-center space-x-2"
           >
             <MessageCircle className="w-5 h-5" />
             <span>Ask AI Assistant</span>

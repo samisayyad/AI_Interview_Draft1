@@ -25,7 +25,7 @@ const AppContent = () => {
   return (
     <>
       <LoadingTransition isLoading={isLoading} />
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <div className="min-h-screen bg-black">
         <Navigation />
         <Routes>
           <Route path="/" element={<HomePage />} />

@@ -18,10 +18,12 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center shadow-lg">
-              <Video className="w-5 h-5 text-white" />
+            <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center shadow-lg">
+              <div className="w-6 h-6 bg-gradient-to-br from-blue-600 to-purple-600 rounded-md flex items-center justify-center">
+                <div className="w-3 h-3 bg-white rounded-sm"></div>
+              </div>
             </div>
-            <span className="font-bold text-xl text-white">InterviewAI</span>
+            <span className="font-bold text-xl text-white">Devgent AI</span>
           </div>
           
           <div className="flex space-x-1">

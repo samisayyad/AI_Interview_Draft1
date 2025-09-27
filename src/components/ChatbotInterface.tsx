@@ -154,20 +154,20 @@ const ChatbotInterface: React.FC<ChatbotInterfaceProps> = ({ history, onUpdateHi
   };
 
   return (
-    <div className="min-h-screen py-8">
+    <div className="min-h-screen bg-black py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8 animate-fade-in-up">
-          <div className="w-16 h-16 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-2xl">
+          <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-2xl">
             <Bot className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">AI Interview Assistant</h1>
-          <p className="text-lg text-slate-300">
+          <p className="text-lg text-gray-300">
             Get personalized interview tips and practice with our intelligent assistant
           </p>
         </div>
 
-        <div className="bg-slate-800/50 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-700/50 overflow-hidden animate-fade-in-up animation-delay-200">
+        <div className="bg-gray-800/50 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-700/50 overflow-hidden animate-fade-in-up animation-delay-200">
           {/* Messages Area */}
           <div className="h-96 overflow-y-auto p-6 space-y-4">
             {messages.map((message) => (
@@ -178,7 +178,7 @@ const ChatbotInterface: React.FC<ChatbotInterfaceProps> = ({ history, onUpdateHi
                 }`}
               >
                 {message.isBot && (
-                  <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
                     <Bot className="w-4 h-4 text-white" />
                   </div>
                 )}
@@ -186,14 +186,15 @@ const ChatbotInterface: React.FC<ChatbotInterfaceProps> = ({ history, onUpdateHi
                 <div
                   className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${
                     message.isBot
-                      ? 'bg-slate-700/50 backdrop-blur-sm text-slate-200 border border-slate-600/50'
-                      : 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg'
+                      ? 'bg-gray-700/50 backdrop-blur-sm text-gray-200 border border-gray-600/50'
+                      : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
                   }`}
                 >
                   <p className="leading-relaxed">{message.text}</p>
                   <div
                     className={`text-xs mt-2 ${
                       message.isBot ? 'text-slate-400' : 'text-purple-100'
+                      message.isBot ? 'text-gray-400' : 'text-blue-100'
                     }`}
                   >
                     {message.timestamp.toLocaleTimeString([], {
@@ -204,8 +205,8 @@ const ChatbotInterface: React.FC<ChatbotInterfaceProps> = ({ history, onUpdateHi
                 </div>
                 
                 {!message.isBot && (
-                  <div className="w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
-                    <User className="w-4 h-4 text-slate-300" />
+                  <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
+                    <User className="w-4 h-4 text-gray-300" />
                   </div>
                 )}
               </div>
@@ -213,14 +214,14 @@ const ChatbotInterface: React.FC<ChatbotInterfaceProps> = ({ history, onUpdateHi
             
             {isTyping && (
               <div className="flex items-start space-x-3 justify-start">
-                <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
                   <Bot className="w-4 h-4 text-white" />
                 </div>
-                <div className="bg-slate-700/50 backdrop-blur-sm px-4 py-3 rounded-2xl border border-slate-600/50">
+                <div className="bg-gray-700/50 backdrop-blur-sm px-4 py-3 rounded-2xl border border-gray-600/50">
                   <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce animation-delay-200"></div>
-                    <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce animation-delay-400"></div>
+                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce animation-delay-200"></div>
+                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce animation-delay-400"></div>
                   </div>
                 </div>
               </div>
@@ -230,8 +231,8 @@ const ChatbotInterface: React.FC<ChatbotInterfaceProps> = ({ history, onUpdateHi
 
           {/* Quick Questions */}
           {messages.length <= 2 && (
-           <div className="border-t border-slate-600/50 p-6 bg-slate-900/30">
-             <h3 className="text-sm font-semibold text-slate-300 mb-3 flex items-center">
+           <div className="border-t border-gray-600/50 p-6 bg-gray-900/30">
+             <h3 className="text-sm font-semibold text-gray-300 mb-3 flex items-center">
                 <HelpCircle className="w-4 h-4 mr-2" />
                 Quick Questions
               </h3>
@@ -240,7 +241,7 @@ const ChatbotInterface: React.FC<ChatbotInterfaceProps> = ({ history, onUpdateHi
                   <button
                     key={index}
                     onClick={() => handleQuickQuestion(question)}
-                    className="px-3 py-2 bg-slate-700/50 backdrop-blur-sm text-slate-300 text-sm rounded-lg border border-slate-600/50 hover:border-purple-500/50 hover:bg-slate-600/50 transition-all duration-200"
+                    className="px-3 py-2 bg-gray-700/50 backdrop-blur-sm text-gray-300 text-sm rounded-lg border border-gray-600/50 hover:border-blue-500/50 hover:bg-gray-600/50 transition-all duration-200"
                   >
                     {question}
                   </button>
@@ -250,7 +251,7 @@ const ChatbotInterface: React.FC<ChatbotInterfaceProps> = ({ history, onUpdateHi
           )}
 
           {/* Input Area */}
-          <div className="border-t border-slate-200 p-6">
+          <div className="border-t border-gray-600/50 p-6">
             <div className="flex space-x-4">
               <div className="flex-1 relative">
                 <textarea
@@ -258,14 +259,14 @@ const ChatbotInterface: React.FC<ChatbotInterfaceProps> = ({ history, onUpdateHi
                   onChange={(e) => setInputText(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask me about interview tips, techniques, or any questions..."
-                  className="w-full px-4 py-3 border border-slate-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400"
                   rows={2}
                 />
               </div>
               <button
                 onClick={handleSendMessage}
                 disabled={!inputText.trim() || isTyping}
-                className="bg-gradient-to-r from-blue-600 to-teal-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center space-x-2"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center space-x-2"
               >
                 <Send className="w-4 h-4" />
               </button>
@@ -274,7 +275,7 @@ const ChatbotInterface: React.FC<ChatbotInterfaceProps> = ({ history, onUpdateHi
         </div>
 
         {/* Tips Section */}
-        <div className="mt-8 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl p-6 text-white shadow-2xl animate-fade-in-up animation-delay-400">
+        <div className="mt-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 text-white shadow-2xl animate-fade-in-up animation-delay-400">
           <div className="flex items-center space-x-2 mb-4">
             <Lightbulb className="w-5 h-5" />
             <h3 className="font-semibold">Pro Tips</h3>
