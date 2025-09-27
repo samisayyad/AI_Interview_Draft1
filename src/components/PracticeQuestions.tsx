@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { BookOpen, ChevronRight, Clock, Star, Shuffle, Filter, Code, CheckCircle, ArrowLeft, Play, Target } from 'lucide-react';
+import { BookOpen, ChevronRight, Clock, Star, Shuffle, Filter, Code, CheckCircle, ArrowLeft, Play, Target, Video } from 'lucide-react';
 
 interface MCQOption {
   id: string;
